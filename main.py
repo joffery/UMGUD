@@ -8,7 +8,7 @@ import torch.nn.parallel
 import torch.backends.cudnn as cudnn
 import torch.optim
 import torch.utils.data
-from lenet_mix_ab_all_smo_full_new_2 import LeNet, LabelSmoothLoss
+from model.lenet import LeNet, LabelSmoothLoss
 import numpy
 from metann import Learner
 import scipy
@@ -188,20 +188,14 @@ def main():
                 for _ in range(args.T_sample):
                     lam, mask, output_b_n = model.functional(params_new, True, input,  mix=False, noise_layer=True)
                     lam2, mask2, output_b_n_mix = model.functional(params_new, True, input, noise_layer=True)
-                    # loss_b_mc += criterion(output_b_n, target) + args.alpha*mixup_criterion(criterion, output_b_n_mix, y_a, y_b, lam)
-                    # loss_b_mc += criterion(output_b_n, target) + 0.1*criterion(output_b_n_mix, target)
-                    loss_b_mc += criterion(output_b_n, target) + 0.1*criterion_smooth(output_b_n_mix, target, mask2, lam2) # soft label
-                    # loss_b_mc += 0*criterion(output_b_n, target) + criterion(output_b_n_mix, target)
-                    # loss_b_mc += criterion_smooth(output_b_n, target, mask) + args.alpha*criterion(output_b_n_mix, target)
+                    loss_b_mc += criterion(output_b_n, target) + 0.1*criterion_smooth(output_b_n_mix, target, mask2, lam2)
 
                 loss_b = loss_b_mc/args.T_sample + ce_loss
-                # loss_b = loss_b_mc/args.T_sample
 
                 optimizer.zero_grad()
                 loss_b.backward(create_graph=True)
                 optimizer.step()
 
-            # scheduler.step()
             # measure accuracy and record loss
             prec1 = accuracy(output_a_o, target, topk=(1,))[0]
             losses.update(ce_loss.data.item(), input.size(0))

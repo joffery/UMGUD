@@ -77,12 +77,10 @@ class LeNet(nn.Module):
             a, b, smo = torch.split(absmo, 1, dim=1)
             smo = self.sig1var(smo)
 
-            # m = Bernoulli(torch.max(smo-0.3, torch.zeros_like(smo)))
             m = Bernoulli(smo)
             mask = m.sample().bool()
 
             if mix:
-                # a, b = 2 + torch.clamp(a, -0.5, 0.5), 1 + torch.clamp(b, -0.5, 0.5)
                 a, b = 1 + torch.clamp(a, -0.5, 1), 1 + torch.clamp(b, -0.5, 1)
                 beta = Beta(a.unsqueeze(-1).unsqueeze(-1), b.unsqueeze(-1).unsqueeze(-1))
                 lam = beta.sample()

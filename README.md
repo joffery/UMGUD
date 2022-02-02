@@ -6,7 +6,7 @@ This repository holds the Pytorch implementation of [Uncertainty-guided Model Ge
 
 We study a worst-case scenario in generalization: Out-of-domain generalization from a single source. The goal is to learn a robust model from a single source and expect it to generalize over many unknown distributions. This challenging problem has been seldom investigated while existing solutions suffer from various limitations. In this paper, we propose a new solution. The key idea is to augment the source capacity in both input and label spaces, while the augmentation is guided by uncertainty assessment.
 
-<p align="center"><img src="teaser" width="100%" alt="" /></p>
+<p align="center"><img src="teaser.png" width="100%" alt="" /></p>
 
 ## Prerequisites
 
