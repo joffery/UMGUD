@@ -188,7 +188,7 @@ def main():
                 for _ in range(args.T_sample):
                     lam, mask, output_b_n = model.functional(params_new, True, input,  mix=False, noise_layer=True)
                     lam2, mask2, output_b_n_mix = model.functional(params_new, True, input, noise_layer=True)
-                    loss_b_mc += criterion(output_b_n, target) + 0.1*criterion_smooth(output_b_n_mix, target, mask2, lam2)
+                    loss_b_mc += criterion(output_b_n, target) + 0.01*criterion_smooth(output_b_n_mix, target, mask2, lam2)
 
                 loss_b = loss_b_mc/args.T_sample + ce_loss
 
