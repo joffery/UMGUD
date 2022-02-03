@@ -24,7 +24,7 @@ parser.add_argument('--data_dir', default='data', type=str,
                     help='dataset dir')
 parser.add_argument('--dataset', default='mnist', type=str,
                     help='dataset mnist or cifar10')
-parser.add_argument('--num_iters', default=10001, type=int,
+parser.add_argument('--num_iters', default=6001, type=int,
                     help='number of total epochs to run')
 parser.add_argument('--start_iters', default=0, type=int,
                     help='manual epoch number (useful on restarts)')
